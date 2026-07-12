@@ -10,7 +10,7 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 st.set_page_config(page_title="Fake News Detector", layout="wide")
 
-# sidebar
+
 st.sidebar.title("Fake News Detector")
 theme = st.sidebar.selectbox("Theme", ["Dark", "Light"])
 st.sidebar.markdown("---")
@@ -21,13 +21,13 @@ st.sidebar.markdown("### Steps")
 st.sidebar.markdown("1. Paste the news\n2. Fill optional fields\n3. Hit Analyze")
 st.sidebar.warning("AI can be wrong sometimes. Always double check.")
 
-# theme
+
 if theme == "Dark":
     st.markdown("<style>.stApp { background-color: #0E1117; color: white; }</style>", unsafe_allow_html=True)
 else:
     st.markdown("<style>.stApp { background-color: #f9f9f9; color: black; }</style>", unsafe_allow_html=True)
 
-# main
+
 st.title("Fake News Detector")
 st.write("Paste a news headline or article and the AI will analyze it for you.")
 st.markdown("---")
@@ -40,7 +40,7 @@ with col1:
 with col2:
     source_url = st.text_input("Source URL (optional)", placeholder="https://...")
     language = st.selectbox("Language", ["English", "Hindi", "Gujarati", "Spanish", "Other"])
-    category = st.selectbox("Category (optional)", ["Unknown", "Politics", "Health", "Science & Tech", "Sports", "Business"])
+    category = st.selectbox("Category (optional)", ["Unknown", "Politics", "Health", "Science & Tech", "Sports", "Business","Entertainment"])
 
 st.markdown("---")
 
@@ -74,7 +74,7 @@ Tell me:
 2. How confident are you? (give a %)
 3. Why do you think so?
 4. Any bias in how it's written?
-5. Are the main claims true?
+5. Are the claims true?
 6. What info is missing?
 7. How can someone verify this themselves? (3 simple ways)
 8. Give a short summary at the end in plain simple english
@@ -102,6 +102,13 @@ Don't use complicated words. Write like you're explaining to a regular person.
             text += char
             placeholder.markdown(text)
             time.sleep(0.002)
+        
+        st.download_button(
+                label="Download result",
+                data=answer,
+                file_name="fake_news_analysis.txt",
+                mime="text/plain",
+            )
 
         st.markdown("---")
 
